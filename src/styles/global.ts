@@ -13,12 +13,16 @@ export const GlobalStyles = createGlobalStyle`
     --green-primary: #27ae60;
     --green-50: #93d7af;
     --red-secondary: #eb5757;
+    --green1: #219653;
 
     --gray100: #333333;
     --gray50: #828282;
     --gray20: #E0E0E0;
     --gray0: #f5f5f5;
-    --gray4: #BDBDBD
+    --gray4: #BDBDBD;
+    --gray5: #999999;
+
+    --negative:#e83f5b;
 }
 button {
     cursor: pointer;
@@ -37,8 +41,8 @@ img {
 section, aside, div {
     display:flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
+    align-items: center;
+    justify-content: center;
 }
 
 body: {
