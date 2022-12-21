@@ -19,7 +19,11 @@ export const CompLogo = () => {
           ingredientes
         </p>
       </div>
-      <img className="imgBalls" src={Balls}></img>
+      <img
+        className="imgBalls"
+        alt="Imagem ilustrativa de circulos"
+        src={Balls}
+      ></img>
     </DivLogo>
   );
 };
