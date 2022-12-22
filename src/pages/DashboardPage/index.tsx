@@ -1,3 +1,11 @@
+import { FoodList } from "../../components/FoodList";
+import { Header } from "../../components/Header";
+
 export const DashboardPage = () => {
-  return <h1>Dashboard</h1>;
+  return (
+    <>
+      <Header />
+      <FoodList />
+    </>
+  );
 };

@@ -1,6 +1,7 @@
 import React, { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../services/api";
+import { toast } from "react-toastify";
 
 interface iUserContext {
   user: iUserData | null;
@@ -77,7 +78,7 @@ export const UserProvider = ({ children }: iUserProviderProps) => {
       api.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${response.data.accessToken}`;
-      // toast.success("Sucesso! Redirecionando.");
+      toast.success("Sucesso! Redirecionando.");
       //nao está importando o toast
       setTimeout(() => {
         handleDashboard();
@@ -95,7 +96,7 @@ export const UserProvider = ({ children }: iUserProviderProps) => {
     try {
       const response = await api.post<iRegisterResponse>("/users", data);
       console.log(response);
-      //toast
+      toast.success("Cadastro realizado com sucesso! Redirecionando.");
       //não está importando
 
       setTimeout(() => {

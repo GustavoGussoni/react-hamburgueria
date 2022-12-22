@@ -6,7 +6,9 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { GlobalStyles } from "./styles/global";
 import { UserProvider } from "./contexts/UserContext";
-// import { ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { CartProvider } from "./contexts/CartContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -15,10 +17,12 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <UserProvider>
-        <GlobalStyles />
-        <App />
+        <CartProvider>
+          <GlobalStyles />
+          <App />
+        </CartProvider>
       </UserProvider>
-      {/* <ToastContainer /> */}
+      <ToastContainer />
     </BrowserRouter>
   </React.StrictMode>
 );
