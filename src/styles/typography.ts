@@ -53,3 +53,23 @@ export const FontBody = styled.p`
   color: var(${(props) => props.color});
   font-family: "Inter", sans-serif;
 `;
+
+export const FontHeadline = styled.p`
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 24px;
+  color: var(${(props) => props.color});
+  font-family: "Inter", sans-serif;
+`;
+
+export const FontRemove = styled.span`
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  color: var(${(props) => props.color});
+  font-family: "Inter", sans-serif;
+  :hover {
+    text-decoration: underline;
+    color: var(--gray100);
+  }
+`;

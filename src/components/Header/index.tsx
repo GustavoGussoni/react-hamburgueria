@@ -10,8 +10,13 @@ import {
 import { HiOutlineSearch } from "react-icons/hi";
 import { FaShoppingCart } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
+import { useContext } from "react";
+import { CartContext } from "../../contexts/CartContext";
+import { UserContext } from "../../contexts/UserContext";
 
 export const Header = () => {
+  const { setShowCart } = useContext(CartContext);
+  const { logOut } = useContext(UserContext);
   return (
     <DivHead>
       <DivLogo>
@@ -31,10 +36,13 @@ export const Header = () => {
           </ButtonHead>
         </Form>
         <button>
-          <FaShoppingCart className="cartBtt" />
+          <FaShoppingCart
+            onClick={() => setShowCart(true)}
+            className="cartBtt"
+          />
         </button>
         <button>
-          <FiLogOut className="logOutBtt" />
+          <FiLogOut onClick={() => logOut()} className="logOutBtt" />
         </button>
       </DivBtts>
     </DivHead>

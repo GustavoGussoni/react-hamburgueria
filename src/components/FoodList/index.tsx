@@ -9,7 +9,8 @@ import { ThemeButton } from "../Button/style";
 import { DivContainer, CardDiv, Card, List } from "./style";
 
 export const FoodList = () => {
-  const { food } = useContext(CartContext);
+  const { food, AddToCart } = useContext(CartContext);
+
   return (
     <DivContainer>
       <List>
@@ -23,11 +24,11 @@ export const FoodList = () => {
               <FontCapition color="--gray50">{el.category}</FontCapition>
               <FontBody color="--green-primary">R${el.price}</FontBody>
               <ThemeButton
-                // onClick={() =>
-                //   food.map((ele) => {
-                //     return el.id === ele.id ? AddToCart(el) : null;
-                //   })
-                // }
+                onClick={() =>
+                  food.map((ele) => {
+                    return el.id === ele.id ? AddToCart(el) : null;
+                  })
+                }
                 type="button"
                 buttonSize="sm"
               >
@@ -37,11 +38,6 @@ export const FoodList = () => {
           </Card>
         ))}
       </List>
-      {/* <FavList
-          removeAll={removeAll}
-          RemoveFromCart={RemoveFromCart}
-          CartList={CartList}
-        ></FavList> */}
     </DivContainer>
   );
 };

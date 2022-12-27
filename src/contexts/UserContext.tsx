@@ -11,12 +11,8 @@ interface iUserContext {
   loginSubmit: (data: iFormLoginData) => Promise<void>;
   registerSubmit: (data: iFormRegisterData) => Promise<void>;
   handleRegister: () => void;
+  logOut: () => void;
 }
-/*loading,
-        setLoading,
-        loginSubmit,
-        registerSubmit,
-        handleRegister,*/
 
 export const UserContext = createContext<iUserContext>({} as iUserContext);
 
@@ -110,6 +106,14 @@ export const UserProvider = ({ children }: iUserProviderProps) => {
     }
   };
 
+  const logOut = () => {
+    toast.success("Obrigado pela visita!", { autoClose: 3000 });
+    setTimeout(() => {
+      window.localStorage.clear();
+      navigate("/");
+    }, 3000);
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -120,6 +124,7 @@ export const UserProvider = ({ children }: iUserProviderProps) => {
         loginSubmit,
         registerSubmit,
         handleRegister,
+        logOut,
       }}
     >
       {children}

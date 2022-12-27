@@ -6,6 +6,7 @@ export const CardDiv = styled.div`
   gap: 8px;
   align-self: flex-start;
   padding: 0 20px;
+  align-items: flex-start;
 `;
 
 export const DivContainer = styled.div`
