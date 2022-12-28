@@ -9,12 +9,12 @@ import { ThemeButton } from "../Button/style";
 import { DivContainer, CardDiv, Card, List } from "./style";
 
 export const FoodList = () => {
-  const { food, AddToCart } = useContext(CartContext);
+  const { AddToCart, filteredFoods } = useContext(CartContext);
 
   return (
     <DivContainer>
       <List>
-        {food.map((el) => (
+        {filteredFoods.map((el) => (
           <Card key={el.id}>
             <div>
               <img src={el.img} alt="" />
@@ -25,7 +25,7 @@ export const FoodList = () => {
               <FontBody color="--green-primary">R${el.price}</FontBody>
               <ThemeButton
                 onClick={() =>
-                  food.map((ele) => {
+                  filteredFoods.map((ele) => {
                     return el.id === ele.id ? AddToCart(el) : null;
                   })
                 }

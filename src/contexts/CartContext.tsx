@@ -1,9 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { api } from "../services/api";
-import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
-import { string } from "yup";
 
 interface iCartContext {
   food: iFood[];
@@ -20,6 +18,9 @@ interface iCartContext {
   setFood: React.Dispatch<React.SetStateAction<iFood[]>>;
   HandleDecrementCount: (prodId: string) => void;
   HandleIncrementCount: (prodId: string) => void;
+  getFood: () => Promise<void>;
+  filteredFoods: iFood[];
+  setFilteredFoods: React.Dispatch<React.SetStateAction<iFood[]>>;
 }
 
 export const CartContext = createContext<iCartContext>({} as iCartContext);
@@ -35,6 +36,7 @@ interface iFilteredProducts {
   price: string | number | bigint | any;
   img: string;
   count: string | number | bigint | any;
+  toLowerCase(): string;
 }
 
 interface iFood {
@@ -44,6 +46,7 @@ interface iFood {
   price: string | number | bigint | any;
   img: string;
   count: string | number | bigint | any;
+  toLowerCase(): string;
 }
 
 interface iError {
@@ -59,6 +62,7 @@ export const CartProvider = ({ children }: iUserProviderProps) => {
   const [food, setFood] = useState([] as iFood[]);
   const [cartList, setCartList] = useState([] as iFilteredProducts[]);
   const [showCart, setShowCart] = useState(false);
+  const [filteredFoods, setFilteredFoods] = useState([] as iFood[]);
 
   const navigate = useNavigate();
 
@@ -72,6 +76,7 @@ export const CartProvider = ({ children }: iUserProviderProps) => {
     try {
       const response = await api.get("/products", token);
       setFood(response.data);
+      setFilteredFoods(response.data);
     } catch (error) {
       const currentError = error as AxiosError<iError>;
       if (currentError.response?.data) {
@@ -134,18 +139,6 @@ export const CartProvider = ({ children }: iUserProviderProps) => {
     setCartList(emptyList);
   };
 
-  //   const submitFind = (event: iEvent) => {
-  //     event.preventDefault();
-  //     setInput("hamburguer");
-  //     setFilteredProducts(
-  //       food.filter(
-  //         (el) =>
-  //           el.name.toLowerCase().includes(input.toLowerCase()) ||
-  //           el.category.toLowerCase().includes(input.toLowerCase())
-  //       )
-  //     );
-  //   };
-
   return (
     <CartContext.Provider
       value={{
@@ -161,6 +154,9 @@ export const CartProvider = ({ children }: iUserProviderProps) => {
         setFood,
         HandleIncrementCount,
         HandleDecrementCount,
+        getFood,
+        filteredFoods,
+        setFilteredFoods,
       }}
     >
       {children}

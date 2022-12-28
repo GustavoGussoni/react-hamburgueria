@@ -70,7 +70,6 @@ export const UserProvider = ({ children }: iUserProviderProps) => {
       const response = await api.post<iLoginResponse>("/login", data);
       localStorage.setItem("authToken", response.data.accessToken);
       setUser(response.data.user);
-      console.log(response);
       api.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${response.data.accessToken}`;
@@ -80,7 +79,6 @@ export const UserProvider = ({ children }: iUserProviderProps) => {
         handleDashboard();
       }, 2000);
     } catch (err) {
-      //se precisar tipar error, voltar no min 17 demo revisão
       console.log(err);
     } finally {
       setLoading(false);
@@ -91,14 +89,12 @@ export const UserProvider = ({ children }: iUserProviderProps) => {
     setLoading(true);
     try {
       const response = await api.post<iRegisterResponse>("/users", data);
-      console.log(response);
       toast.success("Cadastro realizado com sucesso! Redirecionando.");
 
       setTimeout(() => {
         handleLogin();
       }, 2000);
     } catch (err) {
-      //se precisar tipar error, voltar no min 17 demo revisão
       console.log(err);
     } finally {
       setLoading(false);

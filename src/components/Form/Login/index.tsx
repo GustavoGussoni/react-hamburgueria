@@ -14,8 +14,7 @@ interface iLoginFormValues {
 }
 
 export const CompFormLogin = () => {
-  const { user, setUser, loading, setLoading, loginSubmit, handleRegister } =
-    useContext(UserContext);
+  const { loading, loginSubmit, handleRegister } = useContext(UserContext);
 
   const formSchema = yup.object().shape({
     email: yup
