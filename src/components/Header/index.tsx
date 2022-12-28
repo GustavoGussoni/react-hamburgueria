@@ -15,7 +15,7 @@ import { CartContext } from "../../contexts/CartContext";
 import { UserContext } from "../../contexts/UserContext";
 
 export const Header = () => {
-  const { setShowCart } = useContext(CartContext);
+  const { setShowCart, cartList } = useContext(CartContext);
   const { logOut } = useContext(UserContext);
   return (
     <DivHead>
@@ -35,12 +35,16 @@ export const Header = () => {
             <HiOutlineSearch></HiOutlineSearch>
           </ButtonHead>
         </Form>
-        <button>
-          <FaShoppingCart
-            onClick={() => setShowCart(true)}
-            className="cartBtt"
-          />
-        </button>
+        <div className="divBttCart">
+          <button>
+            <FaShoppingCart
+              onClick={() => setShowCart(true)}
+              className="cartBtt"
+            />
+          </button>
+          {cartList ? <p>{cartList.length}</p> : null}
+        </div>
+
         <button>
           <FiLogOut onClick={() => logOut()} className="logOutBtt" />
         </button>

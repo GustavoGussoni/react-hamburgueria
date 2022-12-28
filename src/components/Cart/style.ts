@@ -57,6 +57,24 @@ export const DivName = styled.div`
   flex-direction: column;
   align-self: start;
   align-items: flex-start;
+  gap: 14px;
+
+  .divIncrement {
+    flex-direction: row;
+    gap: 7px;
+
+    button {
+      background: var(--gray20);
+
+      width: 30px;
+      height: 30px;
+    }
+    p {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 16px;
+    }
+  }
 `;
 
 export const List = styled.ul`
@@ -72,7 +90,12 @@ export const List = styled.ul`
     width: 100%;
     height: 100%;
     justify-content: flex-start;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    ::-webkit-scrollbar {
+      width: 0px;
+    }
   }
 
   @media (min-width: 800px) {

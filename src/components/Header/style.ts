@@ -33,6 +33,27 @@ export const DivBtts = styled.div`
   width: 100%;
   max-width: 480px;
 
+  .divBttCart {
+    position: relative;
+
+    p {
+      width: 20px;
+      height: 24px;
+      background: var(--green-primary);
+      border-radius: 7px;
+      position: absolute;
+      right: -11px;
+      top: -13px;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 0px;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
   .cartBtt {
     color: var(--gray4);
     height: 25px;

@@ -25,15 +25,19 @@ import {
 } from "./style";
 
 export const CartList = () => {
-  const { RemoveAll, RemoveFromCart, cartList, setShowCart } =
-    useContext(CartContext);
+  const {
+    RemoveAll,
+    RemoveFromCart,
+    cartList,
+    setShowCart,
+    HandleDecrementCount,
+    HandleIncrementCount,
+  } = useContext(CartContext);
 
   const sumPrice = cartList.reduce(
-    (total, product) => parseInt(total + product.price),
+    (total, product) => total + Math.round(product.price * product.count),
     0
   );
-
-  console.log(cartList);
 
   return (
     <DivModal>
@@ -54,7 +58,15 @@ export const CartList = () => {
                       <Image src={el.img} />
                       <DivName>
                         <FontHeadingFour>{el.name}</FontHeadingFour>
-                        <FontCapition>{el.category}</FontCapition>
+                        <div className="divIncrement">
+                          <button onClick={() => HandleDecrementCount(el.id)}>
+                            -
+                          </button>
+                          <p>{el.count}</p>
+                          <button onClick={() => HandleIncrementCount(el.id)}>
+                            +
+                          </button>
+                        </div>
                       </DivName>
                     </DivMain>
                     <FontRemove

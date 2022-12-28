@@ -1,6 +1,9 @@
 import { createContext, useState, useEffect } from "react";
 import { api } from "../services/api";
 import { toast } from "react-toastify";
+import { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
+import { string } from "yup";
 
 interface iCartContext {
   food: iFood[];
@@ -15,6 +18,8 @@ interface iCartContext {
     React.SetStateAction<iFilteredProducts | []>
   >;
   setFood: React.Dispatch<React.SetStateAction<iFood[]>>;
+  HandleDecrementCount: (prodId: string) => void;
+  HandleIncrementCount: (prodId: string) => void;
 }
 
 export const CartContext = createContext<iCartContext>({} as iCartContext);
@@ -27,17 +32,24 @@ interface iFilteredProducts {
   id: string;
   name: string;
   category: string;
-  price: string;
+  price: string | number | bigint | any;
   img: string;
+  count: string | number | bigint | any;
 }
 
 interface iFood {
   id: string;
   name: string;
   category: string;
-  price: string;
+  price: string | number | bigint | any;
   img: string;
+  count: string | number | bigint | any;
 }
+
+interface iError {
+  error: string;
+}
+
 export const CartProvider = ({ children }: iUserProviderProps) => {
   const localStorageToken = localStorage.getItem("authToken");
   // const [input, setInput] = useState("");
@@ -48,6 +60,8 @@ export const CartProvider = ({ children }: iUserProviderProps) => {
   const [cartList, setCartList] = useState([] as iFilteredProducts[]);
   const [showCart, setShowCart] = useState(false);
 
+  const navigate = useNavigate();
+
   const token = {
     headers: {
       Authorization: "Bearer " + localStorageToken,
@@ -57,10 +71,15 @@ export const CartProvider = ({ children }: iUserProviderProps) => {
   const getFood = async () => {
     try {
       const response = await api.get("/products", token);
-      console.log(response);
       setFood(response.data);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      const currentError = error as AxiosError<iError>;
+      if (currentError.response?.data) {
+        setTimeout(() => {
+          window.localStorage.clear();
+          navigate("/");
+        }, 2000);
+      }
     }
   };
 
@@ -68,15 +87,42 @@ export const CartProvider = ({ children }: iUserProviderProps) => {
     getFood();
   }, []);
 
-  console.log(food);
-
   const AddToCart = (ProductData: iFood) => {
-    console.log("adicionou");
-    cartList.find((el) => ProductData.id === el.id)
-      ? toast.error("Esse produto já foi adicionado!")
-      : setCartList([...cartList, ProductData]);
+    const productAlreadyExists = cartList.find(
+      (el) => el.id === ProductData.id
+    );
+    if (productAlreadyExists) {
+      const updateCart = cartList.map((el) =>
+        el.id === ProductData.id ? { ...el, count: el.count + 1 } : el
+      );
+      setCartList(updateCart);
+    } else {
+      setCartList([...cartList, { ...ProductData, count: 1 }]);
+    }
   };
-  console.log(cartList);
+
+  const HandleIncrementCount = (prodId: string) => {
+    const updateCart = cartList.map((el) =>
+      el.id === prodId ? { ...el, count: el.count + 1 } : el
+    );
+    setCartList(updateCart);
+  };
+
+  const HandleDecrementCount = (prodId: string) => {
+    const product: undefined | number | any = cartList.find(
+      (el) => el.id === prodId
+    );
+
+    if (product.count <= 1) {
+      const updateCart = cartList.filter((el) => el.id !== prodId);
+      setCartList(updateCart);
+    } else {
+      const updateCart = cartList.map((el) =>
+        el.id === prodId ? { ...el, count: el.count - 1 } : el
+      );
+      setCartList(updateCart);
+    }
+  };
 
   const RemoveFromCart = (ProductId: string) => {
     const newList = cartList.filter((product) => product.id !== ProductId);
@@ -113,6 +159,8 @@ export const CartProvider = ({ children }: iUserProviderProps) => {
         setShowCart,
         setFilteredProducts,
         setFood,
+        HandleIncrementCount,
+        HandleDecrementCount,
       }}
     >
       {children}

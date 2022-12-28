@@ -75,7 +75,7 @@ export const UserProvider = ({ children }: iUserProviderProps) => {
         "Authorization"
       ] = `Bearer ${response.data.accessToken}`;
       toast.success("Sucesso! Redirecionando.");
-      //nao está importando o toast
+
       setTimeout(() => {
         handleDashboard();
       }, 2000);
@@ -93,7 +93,6 @@ export const UserProvider = ({ children }: iUserProviderProps) => {
       const response = await api.post<iRegisterResponse>("/users", data);
       console.log(response);
       toast.success("Cadastro realizado com sucesso! Redirecionando.");
-      //não está importando
 
       setTimeout(() => {
         handleLogin();
