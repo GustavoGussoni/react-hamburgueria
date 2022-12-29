@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 import { api } from "../services/api";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
@@ -55,7 +55,7 @@ interface iError {
 
 export const CartProvider = ({ children }: iUserProviderProps) => {
   const localStorageToken = localStorage.getItem("authToken");
-  // const [input, setInput] = useState("");
+
   const [filteredProducts, setFilteredProducts] = useState<
     iFilteredProducts | []
   >([]);
@@ -87,10 +87,6 @@ export const CartProvider = ({ children }: iUserProviderProps) => {
       }
     }
   };
-
-  useEffect(() => {
-    getFood();
-  }, []);
 
   const AddToCart = (ProductData: iFood) => {
     const productAlreadyExists = cartList.find(

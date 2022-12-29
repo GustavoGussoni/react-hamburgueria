@@ -79,7 +79,7 @@ export const UserProvider = ({ children }: iUserProviderProps) => {
         handleDashboard();
       }, 2000);
     } catch (err) {
-      console.log(err);
+      toast.error("Erro! Insira os dados corretamente ou crie um cadastro.");
     } finally {
       setLoading(false);
     }
@@ -95,6 +95,7 @@ export const UserProvider = ({ children }: iUserProviderProps) => {
         handleLogin();
       }, 2000);
     } catch (err) {
+      toast.error("Erro! Email já cadastrado.");
       console.log(err);
     } finally {
       setLoading(false);
